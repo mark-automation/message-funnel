@@ -1,0 +1,75 @@
+{
+  "_note": "Demo dataset used when the MessageFunnel API is unreachable. mins_ago values are converted to timestamps at load time so the demo always looks fresh.",
+  "conversations": [
+    {"id": "conv_maria_santos",  "platform": "messenger", "title": "Maria Santos",      "external_ref": "maria_santos", "unread_count": 2, "last_message": "Hello? Still there po?",                       "mins_ago": 9},
+    {"id": "conv_jomar_dc",      "platform": "messenger", "title": "Jomar Dela Cruz",   "external_ref": "jomar_dc",     "unread_count": 0, "last_message": "Sige pa-reserve nga pag dumating.",            "mins_ago": 230},
+    {"id": "conv_bea_itw",       "platform": "instagram", "title": "bea.inthewild",     "external_ref": "bea_itw",      "unread_count": 1, "last_message": "yayyy sending a DM form na",                   "mins_ago": 18},
+    {"id": "conv_kevin_lifts",   "platform": "instagram", "title": "kevinlifts",        "external_ref": "kevin_lifts",  "unread_count": 0, "last_message": "bro that strap design is fire. collab tayo?",  "mins_ago": 400},
+    {"id": "conv_lola_nena",     "platform": "tiktok",    "title": "@lola.nena.shop",   "external_ref": "lola_nena",    "unread_count": 3, "last_message": "sige bibili nalang ako sa shopee pag wala",    "mins_ago": 70},
+    {"id": "conv_davao_ft",      "platform": "tiktok",    "title": "@davaofoodtrip",    "external_ref": "davao_ft",     "unread_count": 0, "last_message": "pabili po ng 3 sampler box, ship sa Davao",    "mins_ago": 300},
+    {"id": "conv_regine_aq",     "platform": "whatsapp",  "title": "Regine Aquino",     "external_ref": "regine_aq",    "unread_count": 1, "last_message": "Got it, will forward to our buyer in Baguio ✅","mins_ago": 30},
+    {"id": "conv_paolo_r",       "platform": "whatsapp",  "title": "Paolo Reyes",       "external_ref": "paolo_r",      "unread_count": 0, "last_message": "Kuya, bayad na via GCash 🙏 confirm pls",      "mins_ago": 500},
+    {"id": "conv_nadine_uy",     "platform": "telegram",  "title": "Nadine Uy",         "external_ref": "nadine_uy",    "unread_count": 0, "last_message": "Yes please send.",                             "mins_ago": 690},
+    {"id": "conv_mpl_preloved",  "platform": "x",         "title": "@manilapreloved",   "external_ref": "mpl_preloved", "unread_count": 2, "last_message": "hindi ko pa siya narereceive",                 "mins_ago": 44},
+    {"id": "conv_grace_lim",     "platform": "messenger", "title": "Grace Lim",         "external_ref": "grace_lim",    "unread_count": 0, "last_message": "Thank you! Ang ganda nung packaging 😍",       "mins_ago": 900},
+    {"id": "conv_marco_v",       "platform": "whatsapp",  "title": "Marco Villanueva",  "external_ref": "marco_v",      "unread_count": 0, "last_message": "Scheduled delivery po ba every Saturday lang?","mins_ago": 1200}
+  ],
+  "messages": {
+    "conv_maria_santos": [
+      {"sender_name": "Maria Santos", "direction": "in",  "text": "Hi! Is the linen tote still available?",              "mins_ago": 58},
+      {"sender_name": "You",          "direction": "out", "text": "Yes po! Beige and black colors left.",                "mins_ago": 55},
+      {"sender_name": "Maria Santos", "direction": "in",  "text": "Order na ako ng 2. Pwede ba COD sa Cavite?",          "mins_ago": 12},
+      {"sender_name": "Maria Santos", "direction": "in",  "text": "Hello? Still there po?",                              "mins_ago": 9}
+    ],
+    "conv_jomar_dc": [
+      {"sender_name": "Jomar Dela Cruz", "direction": "in",  "text": "Boss may stock kayo ng size 11?",                  "mins_ago": 240},
+      {"sender_name": "You",             "direction": "out", "text": "Wala na sir, last ko size 10. Restock next week.", "mins_ago": 236},
+      {"sender_name": "Jomar Dela Cruz", "direction": "in",  "text": "Sige pa-reserve nga pag dumating.",                "mins_ago": 230}
+    ],
+    "conv_bea_itw": [
+      {"sender_name": "bea.inthewild", "direction": "in",  "text": "saw your reel!! do you ship to Cebu? 🥺",           "mins_ago": 95},
+      {"sender_name": "You",           "direction": "out", "text": "Yes we do! J&T express, 2-3 days 🚚",               "mins_ago": 90},
+      {"sender_name": "bea.inthewild", "direction": "in",  "text": "yayyy sending a DM form na",                        "mins_ago": 18}
+    ],
+    "conv_kevin_lifts": [
+      {"sender_name": "kevinlifts", "direction": "in",  "text": "bro that strap design is fire. collab tayo?",            "mins_ago": 400},
+      {"sender_name": "You",        "direction": "out", "text": "Send us a portfolio link, let's talk 💪",                "mins_ago": 395}
+    ],
+    "conv_lola_nena": [
+      {"sender_name": "@lola.nena.shop", "direction": "in", "text": "naka live ka ba mamaya? gusto ko yung bamboo bag",     "mins_ago": 75},
+      {"sender_name": "@lola.nena.shop", "direction": "in", "text": "hello po??",                                           "mins_ago": 74},
+      {"sender_name": "@lola.nena.shop", "direction": "in", "text": "sige bibili nalang ako sa shopee pag wala",            "mins_ago": 70}
+    ],
+    "conv_davao_ft": [
+      {"sender_name": "@davaofoodtrip", "direction": "in",  "text": "pabili po ng 3 sampler box, ship sa Davao",            "mins_ago": 300},
+      {"sender_name": "You",            "direction": "out", "text": "Noted! Sending checkout link po.",                     "mins_ago": 295}
+    ],
+    "conv_regine_aq": [
+      {"sender_name": "Regine Aquino", "direction": "in",  "text": "Good pm, asking for wholesale price list",              "mins_ago": 140},
+      {"sender_name": "You",           "direction": "out", "text": "Sending po. 12pcs min per SKU for wholesale.",          "mins_ago": 138},
+      {"sender_name": "Regine Aquino", "direction": "in",  "text": "Got it, will forward to our buyer in Baguio ✅",        "mins_ago": 30}
+    ],
+    "conv_paolo_r": [
+      {"sender_name": "Paolo Reyes", "direction": "in",  "text": "Kuya, bayad na via GCash 🙏 confirm pls",                  "mins_ago": 500},
+      {"sender_name": "You",         "direction": "out", "text": "Received po, salamat! Shipping tomorrow.",                "mins_ago": 498}
+    ],
+    "conv_nadine_uy": [
+      {"sender_name": "Nadine Uy", "direction": "in",  "text": "Do you accept bulk orders for corporate giveaways?",         "mins_ago": 700},
+      {"sender_name": "You",       "direction": "out", "text": "Yes! 50pcs up gets tiered pricing. Want the deck?",          "mins_ago": 695},
+      {"sender_name": "Nadine Uy", "direction": "in",  "text": "Yes please send.",                                           "mins_ago": 690}
+    ],
+    "conv_mpl_preloved": [
+      {"sender_name": "@manilapreloved", "direction": "in",  "text": "hi! is this the official account? dm'd another page kasi scam pala", "mins_ago": 200},
+      {"sender_name": "You",             "direction": "out", "text": "This is our only account. Never transact elsewhere ⚠️",              "mins_ago": 198},
+      {"sender_name": "@manilapreloved", "direction": "in",  "text": "noted! so about my order #2231...",                                  "mins_ago": 45},
+      {"sender_name": "@manilapreloved", "direction": "in",  "text": "hindi ko pa siya narereceive",                                       "mins_ago": 44}
+    ],
+    "conv_grace_lim": [
+      {"sender_name": "Grace Lim", "direction": "in", "text": "Thank you! Ang ganda nung packaging 😍",                        "mins_ago": 900}
+    ],
+    "conv_marco_v": [
+      {"sender_name": "Marco Villanueva", "direction": "in",  "text": "Scheduled delivery po ba every Saturday lang?",        "mins_ago": 1200},
+      {"sender_name": "You",              "direction": "out", "text": "For NCR po yes, Sat-Tue window. Province MWF.",        "mins_ago": 1195}
+    ]
+  }
+}

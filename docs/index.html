@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MessageFunnel — One inbox for every platform</title>
+<meta name="description" content="See Messenger, Instagram, TikTok, WhatsApp, Telegram and X messages on one page.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-glyph">⬇</span>
+      <span class="brand-name">Message<span class="brand-accent">Funnel</span></span>
+    </div>
+    <input id="search" class="search" type="search" placeholder="Search conversations…" autocomplete="off">
+    <div class="topbar-right">
+      <span id="status-pill" class="pill pill-connecting"><span class="dot"></span><span id="status-label">Connecting…</span></span>
+      <button id="refresh-btn" class="btn-icon" title="Refresh">⟳</button>
+    </div>
+  </header>
+
+  <aside class="sidebar">
+    <nav id="platform-filters" class="filters"></nav>
+    <section class="accounts">
+      <h3>Connected accounts</h3>
+      <ul id="account-list"></ul>
+    </section>
+    <footer class="sidebar-foot">
+      <span id="stat-line">—</span>
+    </footer>
+  </aside>
+
+  <section class="conv-pane">
+    <div id="conv-list" class="conv-list"></div>
+  </section>
+
+  <section class="thread-pane" id="thread-pane">
+    <div class="thread-empty" id="thread-empty">
+      <div class="empty-art">💬</div>
+      <p>Select a conversation<br>to see the full funnel.</p>
+    </div>
+    <div class="thread-active hidden" id="thread-active">
+      <header class="thread-head" id="thread-head"></header>
+      <div class="thread-scroll" id="thread-scroll"></div>
+      <form class="composer" id="composer">
+        <input id="composer-input" type="text" placeholder="Reply…" autocomplete="off">
+        <button type="submit" class="btn-send">Send</button>
+      </form>
+    </div>
+  </section>
+</div>
+<script src="config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
