@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="description" content="MessageFunnel — see every message from Messenger, Instagram, TikTok, WhatsApp, Telegram and X on one page.">
+<title>MessageFunnel — Unified Inbox</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%AC%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="styles.css">
+<script>
+/* Apply saved theme before paint to avoid flash */
+(function(){try{var t=localStorage.getItem('mf_theme');
+if(!t){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+</script>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-glyph" aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none">
+        <path d="M3 4h18l-7 8v6l-4 2v-8L3 4z" fill="currentColor"/>
+      </svg>
+    </span>
+    <span class="brand-name">Message<b>Funnel</b></span>
+  </div>
+  <div class="topbar-right">
+    <span class="status-pill" title="Connectors are simulated locally — no external APIs are called">
+      <span class="dot"></span> Demo data
+    </span>
+    <button id="themeToggle" class="icon-btn" type="button" aria-label="Toggle dark mode">🌗</button>
+  </div>
+</header>
+
+<div class="demo-note" role="note">
+  Demo build — conversations are sample data rendered locally. Real Messenger/Instagram/TikTok pulls need OAuth apps + a token backend (see repo README).
+</div>
+
+<main class="layout">
+  <nav class="rail" id="rail" aria-label="Filter by platform"></nav>
+
+  <section class="pane list-pane" aria-label="Conversations">
+    <div class="list-head">
+      <input id="searchBox" type="search" placeholder="Search people &amp; messages"
+             autocomplete="off" aria-label="Search conversations">
+    </div>
+    <ul class="convo-list" id="convoList"></ul>
+  </section>
+
+  <section class="pane thread-pane" id="threadPane" aria-label="Conversation">
+    <div class="empty-state" id="emptyState">
+      <div class="empty-art" aria-hidden="true">📬</div>
+      <p>Select a conversation to read it here.</p>
+      <p class="empty-sub">All your platforms, funneled into one inbox.</p>
+    </div>
+    <!-- Active thread is injected by app.js -->
+  </section>
+</main>
+
+<noscript><div style="padding:16px;font-family:sans-serif">MessageFunnel needs JavaScript to render your inbox.</div></noscript>
+</body>
+</html>
