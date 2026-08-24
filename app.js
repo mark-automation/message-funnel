@@ -294,11 +294,102 @@
 
   /* ---------- actions ---------- */
 
+  // Live mode: MessageFunnel API base (?api= override > window.MF_LIVE_API > '')
+  var LIVE_API = (function () {
+    try {
+      var q = new URLSearchParams(window.location.search).get('api');
+      return (q || window.MF_LIVE_API || '').replace(/\/+$/, '');
+    } catch (e) { return ''; }
+  })();
+  var PLATFORM_META = {
+    messenger: { color: '#0084FF' }, instagram: { color: '#E1306C' },
+    tiktok: { color: '#FE2C55' }, whatsapp: { color: '#25D366' },
+    telegram: { color: '#229ED9' }, x: { color: '#8899A6' }
+  };
+
+  function apiJSON(path, opts) {
+    opts = Object.assign({}, opts);
+    opts.headers = Object.assign({}, opts.headers,
+      window.MF_AUTH && window.MF_AUTH.getToken()
+        ? { 'Authorization': 'Bearer ' + window.MF_AUTH.getToken() } : {});
+    var ctrl = new AbortController();
+    var timer = setTimeout(function () { ctrl.abort(); }, 4000);
+    return fetch(LIVE_API + path, Object.assign({}, opts, { signal: ctrl.signal }))
+      .then(function (r) {
+        clearTimeout(timer);
+        if (r.status === 401 && window.MF_AUTH) {
+          window.MF_AUTH.handleUnauthorized();
+          throw new Error(401);
+        }
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return r.json();
+      });
+  }
+
+  function mapApiConvo(c) {
+    return {
+      id: c.id,
+      platformId: c.platform,
+      name: c.title,
+      color: (c.meta && c.meta.color) || PLATFORM_META[c.platform] || '#666',
+      icon: ICONS[c.platform] || '',
+      unreadSeed: c.unread_count || 0,
+      messages: [],
+      lastTs: (c.updated_at || 0) * 1000,
+      live: true
+    };
+  }
+
+  function mapApiMsg(m) {
+    return { from: m.direction === 'out' ? 'me' : 'them', text: m.text, ts: m.timestamp * 1000 };
+  }
+
+  function loadConversationsAPI() {
+    return apiJSON('/api/conversations').then(function (list) {
+      var convos = list.map(mapApiConvo);
+      return Promise.all(convos.map(function (c) {
+        return apiJSON('/api/conversations/' + encodeURIComponent(c.id) + '/messages')
+          .then(function (msgs) { c.messages = msgs.map(mapApiMsg); })
+          .catch(function () { c.messages = []; });
+      })).then(function () {
+        convos.sort(function (a, b) { return b.lastTs - a.lastTs; });
+        state.convos = convos;
+        state.readSet = {};
+        state.live = true;
+      });
+    });
+  }
+
+  function refreshLiveTick() {
+    if (!state.live) return;
+    var activeId = state.activeId;
+    loadConversationsAPI().then(function () {
+      renderRail(); renderList();
+      if (activeId && findConvo(activeId)) renderThread();
+    }).catch(function () { /* transient */ });
+  }
+
+  function setStatusPill(live) {
+    var pill = document.querySelector('.status-pill');
+    if (!pill) return;
+    pill.innerHTML = '<span class="dot"></span>' + (live ? ' Live · connected to API' : ' Demo data');
+    pill.title = live
+      ? 'Connected to ' + LIVE_API
+      : 'API not reachable — showing sample data';
+    var note = document.querySelector('.demo-note');
+    if (note) note.style.display = live ? 'none' : '';
+  }
+
   function openConvo(id) {
     state.activeId = id;
+    var convo = findConvo(id);
     if (!state.readSet[id]) {
       state.readSet[id] = true;
       persistRead();
+    }
+    if (convo && convo.live) {
+      apiJSON('/api/conversations/' + encodeURIComponent(id) + '/read', { method: 'POST' })
+        .catch(function () {});
     }
     renderThread();
     refreshAll();
@@ -323,11 +414,28 @@
     var text = input.value.trim();
     if (!text) return;
 
+    input.value = '';
+    if (convo.live) {
+      // Real send via API; UI updates when the response lands.
+      apiJSON('/api/conversations/' + encodeURIComponent(convo.id) + '/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: text })
+      }).then(function (m) {
+        convo.messages.push(mapApiMsg(m));
+        convo.lastTs = m.timestamp * 1000;
+        renderThread();
+        refreshAll();
+      }).catch(function () {
+        input.value = text; // restore on failure
+      });
+      return;
+    }
+
     var msg = { from: 'me', text: text, ts: Date.now() };
     convo.messages.push({ from: 'me', text: msg.text, ts: msg.ts });
     convo.lastTs = msg.ts;
     persistSent(convo, msg);
-    input.value = '';
     renderThread();
     refreshAll();
 
@@ -402,10 +510,40 @@
 
   /* ---------- boot ---------- */
 
-  loadConversations();
-  renderRail();
-  renderList();
-  renderThread();
-  bindEvents();
+  function boot() {
+    if (LIVE_API) {
+      var start = function () {
+        loadConversationsAPI()
+          .then(function () {
+            setStatusPill(true);
+            renderRail(); renderList(); renderThread();
+          })
+          .catch(function () {
+            state.live = false;
+            setStatusPill(false);
+            loadConversations();
+            renderRail(); renderList(); renderThread();
+          });
+      };
+      if (window.MF_AUTH && window.MF_AUTH.isActive()) {
+        // Wait for login before pulling the inbox; auth.js shows the gate.
+        var waitAuth = function () {
+          if (document.getElementById('mf-auth')) { setTimeout(waitAuth, 400); return; }
+          if (window.MF_AUTH.getToken()) start();
+          else setTimeout(waitAuth, 400);
+        };
+        waitAuth();
+      } else {
+        start();
+      }
+      setInterval(refreshLiveTick, 20000);
+    } else {
+      loadConversations();
+      renderRail(); renderList(); renderThread();
+    }
+    bindEvents();
+  }
+
+  boot();
   updateTitle();
 })();

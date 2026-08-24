@@ -60,6 +60,13 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <noscript><div style="padding:16px;font-family:sans-serif">MessageFunnel needs JavaScript to render your inbox.</div></noscript>
 
 <script src="data.js"></script>
+<script>
+/* Live mode: point this at your MessageFunnel API base URL (https, no trailing
+   slash) and the inbox goes live — real conversations, replies via POST.
+   Empty string = demo data. Per-visit override: append ?api=http://... */
+window.MF_LIVE_API = "";
+</script>
+<script src="auth.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
